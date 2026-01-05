@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <climits>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int rows, cols;
+    cin >> rows >> cols;
+
+    vector<vector<int>> grid(rows, vector<int>(cols));
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cin >> grid[i][j];
+        }
+    }
+
+    long long maxSum = LLONG_MIN;
+
+    for (int left = 0; left < cols; left++) {
+        vector<long long> rowSum(rows, 0);
+
+        for (int right = left; right < cols; right++) {
+            for (int i = 0; i < rows; i++) {
+                rowSum[i] += grid[i][right];
+            }
+
+            long long currentSum = 0;
+            for (int i = 0; i < rows; i++) {
+                currentSum = max(rowSum[i], currentSum + rowSum[i]);
+                maxSum = max(maxSum, currentSum);
+            }
+        }
+    }
+
+    cout << maxSum << "\n";
+    return 0;
+}
+
