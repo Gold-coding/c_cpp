@@ -1,0 +1,25 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string s;
+    cin >> s;
+
+    string pattern = "WBWBWWBWBWBW";
+    string notes = "CDEFGAB";
+    int start_idx[7] = {0, 2, 4, 5, 7, 9, 11};
+
+    for (int i = 0; i < 7; i++) {
+        string generated = "";
+        for (int j = 0; j < 20; j++) {
+            generated += pattern[(start_idx[i] + j) % 12];
+        }
+        if (generated == s) {
+            cout << notes[i];
+            break;
+        }
+    }
+
+    return 0;
+}
