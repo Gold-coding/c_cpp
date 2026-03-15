@@ -1,0 +1,24 @@
+//손실함수
+#include <vector>
+#include <cmath>
+
+double mse(const std::vector<double>& y_true, const std::vector<double>& y_pred){
+    double s=0.0;
+    for(size_t i=0;i<y_true.size();++i) s+=std::pow(y_true[i]-y_pred[i],2);
+    return s/y_true.size();
+}
+
+double mae(const std::vector<double>& y_true, const std::vector<double>& y_pred){
+    double s=0.0;
+    for(size_t i=0;i<y_true.size();++i) s+=std::abs(y_true[i]-y_pred[i]);
+    return s/y_true.size();
+}
+
+double binary_cross_entropy(const std::vector<double>& y_true, const std::vector<double>& y_pred){
+    double s=0.0;
+    for(size_t i=0;i<y_true.size();++i){
+        double p=std::min(std::max(y_pred[i],1e-15),1-1e-15);
+        s+=y_true[i]*std::log(p)+(1-y_true[i])*std::log(1-p);
+    }
+    return -s/y_true.size();
+}
